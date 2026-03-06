@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+input{
+    border: 1px solid gray;
+    color: black;
+}
+input:focus{
+    background-color: darkgrey;
+    color: black;
+}
