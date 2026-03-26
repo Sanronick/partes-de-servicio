@@ -54,8 +54,9 @@ function Fieldset4() {
               {(servicio.puntos ?? []).map((punto,pi)=> (
                 <Tareas
                   key={pi}
+                  mostrarTipo={false}
                   titulo={`Punto ${punto.direccion ?? []}`}
-                  punto={punto}
+                  punto={{...punto, tipo: servicio.tipo}}
                   serv={serv}
                   roles={roles}
                   onDelete={()=> {

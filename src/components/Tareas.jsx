@@ -1,6 +1,6 @@
 import './Tareas.css'
 
-function Tareas ({punto,onUpdate, onDelete, serv, roles, titulo}) {
+function Tareas ({punto,onUpdate, onDelete, serv, roles, titulo, mostrarTipo= true}) {
     return (
     <div className="border-2 border-[#8DE2D6] border-dashed rounded-xl p-4 space-y-3">
       <div className="flex items-center justify-between">
@@ -13,29 +13,34 @@ function Tareas ({punto,onUpdate, onDelete, serv, roles, titulo}) {
       </div>
 
       <label className="block text-sm font-semibold text-[#153244]">Tipo de servicio</label>
-      <select
-        className="w-full px-4 py-3 rounded-xl text-black border border-gray-300 focus:outline-none focus:border-[#FFCC27]"
-        value={punto.tipo ?? ""}
-        onChange={(e) => {
-          const val = e.target.value;
-          onUpdate({ ...punto, tipo: val, nombre: val !== "Otro" ? "" : punto.nombre });
-        }}
-      >
-        <option value="">Selecciona una opcion...</option>
-        {serv.map((ser) => <option value={ser} key={ser}>{ser}</option>)}
-      </select>
+      {
+        mostrarTipo && (
+        <select
+          className="w-full px-4 py-3 rounded-xl text-black border border-gray-300 focus:outline-none focus:border-[#FFCC27]"
+          value={punto.tipo ?? ""}
+          onChange={(e) => {
+            const val = e.target.value;
+            onUpdate({ ...punto, tipo: val, nombre: val !== "Otro" ? "" : punto.nombre });
+          }}
+        >
+          <option value="">Selecciona una opcion...</option>
+          {serv.map((ser) => <option value={ser} key={ser}>{ser}</option>)}
+        </select>
 
-      {punto.tipo === "Otro" && (
-        <>
-          <label className="block text-sm font-semibold text-[#153244]">Nombre del Servicio</label>
-          <input type="text"
-            className="input-field w-full px-4 py-3 rounded-xl focus:outline-none text-black"
-            placeholder="Nombre del Servicio"
-            value={punto.nombre ?? ""}
-            onChange={(e) => onUpdate({ ...punto, nombre: e.target.value })}
-          />
-        </>
-      )}
+)
+}
+        {mostrarTipo && punto.tipo === "Otro" && (
+          <>
+            <label className="block text-sm font-semibold text-[#153244]">Nombre del Servicio</label>
+            <input type="text"
+              className="input-field w-full px-4 py-3 rounded-xl focus:outline-none text-black"
+              placeholder="Nombre del Servicio"
+              value={punto.nombre ?? ""}
+              onChange={(e) => onUpdate({ ...punto, nombre: e.target.value })}
+            />
+          </>
+        )}
+
 
       {punto.tipo && (
         <>

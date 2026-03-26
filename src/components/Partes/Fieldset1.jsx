@@ -8,9 +8,9 @@ function Fieldset1() {
   const navigate = useNavigate()
 
   return (
-    <div className="flex-1 overflow-auto p-4 lg:p-6">
+    <div className="w-full overflow-x-hidden p-2 sm:p-4 lg:p-6">
       <div className="step-content fade-in">
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-4">
+        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-8 mb-4 w-full">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg bg-[#FFCB27] text-[#153244]">
               0
@@ -33,7 +33,7 @@ function Fieldset1() {
               <input
                 id="cargador-nombre"
                 type="text"
-                className="input-field w-full px-4 py-3 rounded-xl border border-gray-500 focus:outline-none text-lg text-black"
+                className="input-field w-full px-4 py-3 rounded-xl border border-gray-500 focus:outline-none text-lg text-black min-w-0"
                 placeholder="Juan Pérez"
                 required
                 value={formData.nombre ?? ''}
@@ -50,7 +50,7 @@ function Fieldset1() {
               <input
                 id="cargador-cat"
                 type="number"
-                className="input-field w-full px-4 py-3 rounded-xl border border-gray-500 focus:outline-none text-lg text-black"
+                className="input-field w-full px-4 py-3 rounded-xl border border-gray-500 focus:outline-none text-lg text-black min-w-0"
                 placeholder="123456"
                 inputMode="numeric"
                 pattern="\\d*"
@@ -66,7 +66,7 @@ function Fieldset1() {
         <button
           type="button"
           onClick={() => navigate('/formulario/fieldset2')}
-          className="w-full btn-primary py-4 rounded-xl font-bold text-lg shadow-lg bg-[#FFCC27] text-[#153244] hover:shadow-xl transition-all flex items-center justify-center gap-2"
+          className="w-full btn-primary py-4 rounded-xl font-bold text-lg shadow-lg bg-[#FFCC27] text-[#153244] hover:shadow-xl transition-all flex items-center justify-center gap-2 min-w-0"
         >
           Iniciar Parte
           <svg

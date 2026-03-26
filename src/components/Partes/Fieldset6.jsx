@@ -66,7 +66,7 @@ function Fieldset6() {
 
           <div className="border border-2 border-[#153244] rounded-xl p-2">
             <p className="text-black font-semibold">
-              Controlá los datos ingresados en el panel de la derecha antes de
+              Controlá los datos ingresados en la vista previa antes de
               copiar. Podés volver a cualquier segmento con la barra de
               navegacion de arriba
             </p>
