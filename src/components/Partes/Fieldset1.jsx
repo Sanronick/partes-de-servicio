@@ -25,13 +25,13 @@ function Fieldset1() {
           <div className="space-y-5">
             <div>
               <label
-                htmlFor="cargador-nombre"
+                htmlFor="nombre"
                 className="block text-sm font-semibold mb-2 text-[#153244]"
               >
                 Nombre y Apellido *
               </label>
               <input
-                id="cargador-nombre"
+                id="nombre"
                 type="text"
                 className="input-field w-full px-4 py-3 rounded-xl border border-gray-500 focus:outline-none text-lg text-black min-w-0"
                 placeholder="Juan Pérez"
@@ -42,13 +42,13 @@ function Fieldset1() {
             </div>
             <div>
               <label
-                htmlFor="cargador-cat"
+                htmlFor="cat"
                 className="block text-sm font-semibold mb-2 text-[#153244]"
               >
                 Número de CAT *
               </label>
               <input
-                id="cargador-cat"
+                id="cat"
                 type="number"
                 className="input-field w-full px-4 py-3 rounded-xl border border-gray-500 focus:outline-none text-lg text-black min-w-0"
                 placeholder="123456"

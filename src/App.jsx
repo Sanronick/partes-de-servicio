@@ -10,6 +10,7 @@ import Fieldset5 from "./components/Partes/Fieldset5";
 import Fieldset6 from "./components/Partes/Fieldset6";
 import escudo from '../public/img/escudo.png'
 import logoBA from '../public/img/LogoBA-removebg-preview.png'
+import Reportes from "./components/Reportes";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               <Route path="fieldset5" element={<Fieldset5 />} />
               <Route path="fieldset6" element={<Fieldset6 />} />
             </Route>
+            <Route path="reportes" element={<Reportes />}/>
             <Route path="*" element={<Inicio />} />
           </Routes>
         </HashRouter>

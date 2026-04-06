@@ -22,7 +22,7 @@ function Inicio() {
 
         {/* Tarjeta Reporte */}
         <NavLink
-          to="/reporte"
+          to="/reportes"
           className="group w-full md:w-80 p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-xl hover:bg-white/10 transition-all duration-300 hover:scale-105 flex flex-col items-center text-center"
         >
           <span className="text-7xl mb-4">📊</span>
