@@ -1,10 +1,11 @@
 import "./Whatsapp.css";
 import FormatearMensaje from "./Partes/Mensaje";
 import servicios from "../services/servicios";
+import { useMemo } from "react";
 
 function Whatsapp({ onClose, formData }) {
 
-  const mensaje = FormatearMensaje(formData)
+ const mensaje = useMemo(() => FormatearMensaje(formData), [formData])
 
   return (
     <div className="p-4 lg:p-6">

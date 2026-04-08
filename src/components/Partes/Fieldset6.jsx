@@ -3,6 +3,7 @@ import "./Fieldset6.css";
 import { useState } from "react";
 import Modal from "../Modal";
 import FormatearMensaje from "./Mensaje";
+import serviceReportes from "../../services/serviceReportes";
 
 function Fieldset6() {
   const navigate = useNavigate();
@@ -13,28 +14,41 @@ function Fieldset6() {
     tipo: "exito",
   });
 
-  const verParte = async () => {
-    try {
-      const mensaje = FormatearMensaje(formData);
-      console.log(mensaje);
-      await navigator.clipboard.writeText(mensaje);
-      setModal({
-        mostrar: true,
-        mensaje: "Datos copiados correctamente",
-        tipo: "exito",
-      });
-    } catch (error) {
-      console.error("Error al copiar: ", error);
-      setModal({
-        mostrar: true,
-        mensaje: "Hubo un error al copiar los datos",
-        tipo: "Error",
-      });
-    }
-  };
 
   function cerrarModal() {
     setModal({ ...modal, mostrar: false });
+  }
+
+
+
+  const enviarParte = async () => {
+    try{
+      const mensaje = FormatearMensaje(formData);
+      console.log(mensaje);
+      await navigator.clipboard.writeText(mensaje);
+
+        const { totalAgentes, totalPresentes, total, ...parteFinal} = formData
+
+      await serviceReportes.guardarParte(parteFinal)
+      console.log(parteFinal)
+
+      setModal({
+        mostrar: true,
+        mensaje: "Parte Guardado Correctamente ✅",
+        tipo: "exito"
+      })
+      vaciarFormulario()
+      navigate("/")
+    }catch(error) {
+      console.error(error)
+
+      console.log(formData)
+      setModal({
+        mostrar: true,
+        mensaje: `Error: ${error.response.data.error} revisá los campos e intentalo nuevamente`,
+        tipo: "error"
+      })
+    }
   }
 
 
@@ -83,7 +97,7 @@ function Fieldset6() {
         </button>
         <button
           type="button"
-          onClick={verParte}
+          onClick={enviarParte}
           className="flex-1 btn-primary py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center bg-[#FFCC27] text-[#153244]"
         >
           <svg

@@ -8,14 +8,23 @@ function Fieldset4() {
   const { formData, updateField } = useOutletContext();
 
   const servicios = Array.isArray(formData.servicios) ? formData.servicios : [];
-
   const serv = serviciosData.getServicios("servicio") ?? [];
-
   const roles = serviciosData.getRoles("rol") ?? [];
 
+  const servicioVacio = {
+    tipo: '',
+    nombre: '',
+    puntos: []
+  }
+
+  const puntoVacio = {
+    direccion: '',
+    agentes : []
+  }
+
+
   const agregarServicio = () => {
-    const actual = Array.isArray(formData.servicios) ? formData.servicios : [];
-    updateField("servicios", [...actual, { tipo: "", nombre: "" }]);
+    updateField("servicios", [...servicios, { ...servicioVacio}]);
   };
 
   const eliminarServicio = (index) => {
@@ -24,6 +33,14 @@ function Fieldset4() {
       servicios.filter((_, i) => i !== index),
     );
   };
+
+  const labelServicio = (servicio, index) => {
+    const label = servicio.tipo === 'Otro'
+      ? (servicio.nombre || 'Sin Nombre')
+      : (servicio.tipo || 'Sin tipo')
+
+      return ` Servicio ${index + 1} - ${label}`
+  }
 
   return (
     <div className="step-content fade-in">
@@ -42,10 +59,12 @@ function Fieldset4() {
         servicios.map((servicio, index)=> (
           <div key={index}>
             <Tareas
-              titulo={`Punto ${servicio.direccion ?? []}`}
+              titulo={labelServicio(servicio,index)}
               punto={servicio}
               serv={serv}
               roles={roles}
+              mostrarTipo={true}
+              mostrarCampos={false}
               onDelete={()=> eliminarServicio(index)}
               onUpdate={(actualizado)=> {
                 const nuevos = servicios.map((s,i)=> i === index ? actualizado : s)
@@ -55,7 +74,8 @@ function Fieldset4() {
                 <Tareas
                   key={pi}
                   mostrarTipo={false}
-                  titulo={`Punto ${punto.direccion ?? []}`}
+                  mostrarCampos={true}
+                  titulo={`↳ Punto ${pi + 1}${punto.direccion ? `: 📍 ${punto.direccion}`: ''}`}
                   punto={{...punto, tipo: servicio.tipo}}
                   serv={serv}
                   roles={roles}
@@ -64,8 +84,8 @@ function Fieldset4() {
                     const nuevos = servicios.map((s,i)=> i===index ? {...s,puntos: nuevosPuntos} : s)
                     updateField('servicios',nuevos)
                   }}
-                  onUpdate={(actualizar) => {
-                    const nuevosPuntos = (servicio.puntos ?? []).map((p,idx) => idx === pi ? actualizar : p)
+                  onUpdate={(actualizado) => {
+                    const nuevosPuntos = (servicio.puntos ?? []).map((p,idx) => idx === pi ? actualizado : p)
                     const nuevos = servicios.map((s,i)=> i === index ? {...s,puntos: nuevosPuntos}:s)
                     updateField('servicios',nuevos)
                   }}
@@ -75,7 +95,7 @@ function Fieldset4() {
                 <button type="button"
                 className="w-full bg-white border-2 py-2 rounded-lg text-sm font-semibold hover:shadow-md transition-all border-[#8DE2D6] text-[#153244]"
                 onClick={()=> {
-                  const puntos = [...(servicio.puntos ?? []), {tipo: '', nombre: '', direccion: '',agentes: '',roles:[]}]
+                  const puntos = [...(servicio.puntos ?? []), {...puntoVacio}]
                   const nuevos = servicios.map((s, i) => i === index ? { ...s, puntos } : s);
                   updateField("servicios", nuevos);
                 }}>

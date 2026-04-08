@@ -3,9 +3,9 @@ function FormatearMensaje(formData) {
   
   const lineas = []
 
-/*   lineas.push('*Parte de Servicio*') */
+
   if (formData.baseDespliegue && formData.lugarDespliegue){
-    /* const emoji = formData.baseDespliegue === 'Base' ? '🏢' : '🏙️' */
+
     const etiqueta = formData.baseDespliegue === 'Base' ? 'Parte de Servicio Base' : 'Parte de Servicio Despliegue'
     lineas.push(`*${etiqueta}* ${formData.lugarDespliegue}`)
     }
@@ -50,26 +50,17 @@ function FormatearMensaje(formData) {
     formData.servicios.forEach((servicio, i) => {
       lineas.push('')
       lineas.push(`*Servicio ${i + 1} ${servicio.tipo === 'Otro' ? servicio.nombre : servicio.tipo}*`)
-      /* lineas.push(` ↳ Punto 1: `) */
-      if (servicio.direccion) lineas.push(`↳ Punto 1: 📍 ${servicio.direccion}`)
-      if (servicio.agentes && servicio.agentes.trim()) {
-        servicio.agentes.split(/[\n,]/).map(a => a.trim()).filter(a => a !== '')
-          .forEach((nombre, j) => {
-            lineas.push(`   • ${nombre} (${servicio.roles?.[j] ?? 'Sin rol'})`)
-          })
-      }
 
       // Puntos adicionales
       if (Array.isArray(servicio.puntos)) {
         servicio.puntos.forEach((punto, pi) => {
-          lineas.push(` ↳ Punto ${pi + 2}: 📍 ${punto.direccion}`)
-          /* if (punto.direccion) lineas.push(``) */
-          if (punto.agentes && punto.agentes.trim()) {
-            punto.agentes.split(/[\n,]/).map(a => a.trim()).filter(a => a !== '')
-              .forEach((nombre, j) => {
-                lineas.push(`   • ${nombre} (${punto.roles?.[j] ?? 'Sin rol'})`)
-              })
-          }
+          lineas.push(` ↳ Punto ${pi + 1}: 📍 ${punto.direccion}`)
+
+         if (Array.isArray(punto.agentes)) {
+          punto.agentes.forEach(agente => {
+            lineas.push(` • ${agente.nombre} (${agente.rol || 'Sin rol'})`)
+          })
+         }
         })
       }
     })

@@ -1,11 +1,23 @@
 import axios from "axios";
 
-const url = 'https://69d3bc8b336103955f8f8a37.mockapi.io/api/partes/parteServicio'
+const url = 'http://localhost:8080/api/partes'
 
 const getAll = () => axios.get(url).then( r => r.data)
 
 
+const guardarParte = parte =>
+  axios.post(url, parte, {
+    headers: { 'Content-Type': 'application/json' }
+  }).then(r => r.data)
+
+const actualizarParte = ( id, parte ) => axios.put( url+id, parte, {
+    headers: { 'Content-Type' : 'application/json'}
+}).then(r => r.data)
+
+
 
 export default {
-    getAll
+    getAll,
+    guardarParte,
+    actualizarParte
 }

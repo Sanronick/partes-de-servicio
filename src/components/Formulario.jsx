@@ -51,6 +51,11 @@ function Formulario() {
                   shadow-lg lg:shadow-none
                   ${menuOpen ? 'flex' : 'hidden lg:flex'}
                   `}>
+                    <NavLink to='/' className={({isActive}) => `px-4 py-2 rounded-t-lg transition-colors ${
+                          isActive
+                          ? "bg-white/10 text-white border-b-2 border-white"
+                          : "text-white/70 hover:text-white"
+                        }`}>Inicio</NavLink>
                     {['fieldset1','fieldset2','fieldset3','fieldset4','fieldset5','fieldset6']
                     .map((fs,i)=> (
                       <NavLink 
@@ -65,6 +70,7 @@ function Formulario() {
                           {['Datos','Despliegue','Dotacion','Servicios','Ausentes','Observaciones'][i]}
                         </NavLink>
                     ))}
+                    
 
                 </div>
 

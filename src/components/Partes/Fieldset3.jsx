@@ -6,16 +6,20 @@ function Fieldset3() {
   const navigate = useNavigate();
   const { formData, updateField } = useOutletContext();
 
-  const totalAgentes =
-    (Number(formData.infantes) || 0) + (Number(formData.motorizados) || 0);
-  const totalPresentes = totalAgentes + Number(formData.conduccion);
-  const total = totalPresentes + Number(formData.ausentes);
+  const infantes = Number(formData.infantes ?? 0)
+  const motorizados = Number(formData.motorizados ?? 0)
+  const conduccion = Number(formData.conduccion ?? 0)
+  const ausentes = Number(formData.ausentes ?? 0)
+
+  const totalAgentes = infantes + motorizados
+  const totalPresentes = totalAgentes + conduccion
+  const total = totalPresentes + ausentes
 
   useEffect(() => {
-    (updateField("totalAgentes", totalAgentes),
-      updateField("totalPresentes", totalPresentes),
-      updateField("total", total));
-  }, [formData.infantes, formData.motorizados, formData.conduccion, formData.ausentes]);
+    if(!Number.isNaN(totalAgentes)) updateField("totalAgentes", totalAgentes)
+    if(!Number.isNaN(totalPresentes)) updateField("totalPresentes", totalPresentes)
+    if(!Number.isNaN(total)) updateField("total", total);
+  }, [totalAgentes, totalPresentes, total]);
 
   
 
@@ -52,9 +56,10 @@ function Fieldset3() {
                     min="0"
                     className="input-field w-full px-4 py-3 rounded-xl focus:outline-none text-lg"
                     placeholder="0"
-                    value={formData.conduccion || ''}
+                    value={formData.conduccion ?? ''}
                     onChange={(e) => {
-                      updateField("conduccion", e.target.value);
+                      const v = e.target.value
+                      updateField("conduccion", v === "" ? "": Number(v));
                     }}
                   />
                 </div>
@@ -73,9 +78,10 @@ function Fieldset3() {
                     min="0"
                     className="input-field w-full px-4 py-3 rounded-xl focus:outline-none text-lg"
                     placeholder="0"
-                    value={formData.motorizados || '' }
+                    value={formData.motorizados ?? '' }
                     onChange={(e) => {
-                      updateField("motorizados", e.target.value);
+                      const v = e.target.value
+                      updateField("motorizados",v === '' ? '':Number(v));
                     }}
                   />
                 </div>
@@ -94,9 +100,10 @@ function Fieldset3() {
                     min="0"
                     className="input-field w-full px-4 py-3 rounded-xl focus:outline-none text-lg"
                     placeholder="0"
-                    value={formData.infantes || ''}
+                    value={formData.infantes ?? ''}
                     onChange={(e) => {
-                      updateField("infantes", e.target.value);
+                      const v = e.target.value
+                      updateField("infantes", v === '' ? '' : Number(v));
                     }}
                   />
                 </div>
@@ -115,9 +122,10 @@ function Fieldset3() {
                     min="0"
                     className="input-field w-full px-4 py-3 rounded-xl focus:outline-none text-lg"
                     placeholder="0"
-                    value={formData.ausentes || ""}
+                    value={formData.ausentes ?? ""}
                     onChange={(e) => {
-                      updateField("ausentes", e.target.value);
+                      const v = e.target.value
+                      updateField("ausentes", v === '' ? '' : Number(v));
                     }}
                   />
                 </div>

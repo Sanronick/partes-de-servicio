@@ -3,8 +3,8 @@ import serviceReportes from "../services/serviceReportes"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Dialog } from "primereact/dialog"
-import { Badge, Info, Seccion } from "./helpers"
 import { FiEye } from "react-icons/fi"
+import { NavLink } from "react-router-dom"
 
 
 
@@ -41,7 +41,10 @@ function Reportes () {
 
     return (
         <>
-        <h2 className="text-lg text-white font-bold m-4">Partes de Servicio</h2>
+        <div className="flex justify-between items-center w-full">
+            <NavLink to='/' className="text-lg text-white font-bold m-4">Inicio</NavLink>
+            <h2 className="text-lg text-white font-bold m-4">Partes de Servicio</h2>
+        </div>
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
             <DataTable 
                 value={reportes}
@@ -86,7 +89,6 @@ function Reportes () {
                     style={{ width: "4rem"}}/>
             </DataTable>
 
-            {/* Modal Reporte Completo*/}
             <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
@@ -99,51 +101,108 @@ function Reportes () {
                     },
                     header: {
                         className:
-                        "bg-[#0f2235] text-[#FFCC27] border-b border-white/10 px-6 py-4",
+                        "bg-[#8ee2d5] text-[#0f2235] border-b border-white/10 px-6 py-4",
                     },
                     headerTitle: {
                         className: "font-bold text-lg",
                     },
                     headerIcons: {
-                        className: "text-white/60 hover:text-white",
+                        className: "text-[#0f2235]/60 hover:text-white",
                     },
                     content: {
-                        className: "bg-[#0f2235] px-6 py-6",
+                        className: "bg-[#FFFFFF]",
                     },
                 }}
                 header="Reporte Completo"
-                style={{ width: "60vw"}}
+                style={{ width: "40vw"}}
                 
                 >
                     {parteSeleccionado && (
-                        <div className="space-y-6">
-                            <div className="text-[#FFCC27] font-bold text-lg">
-                                Reporte de {parteSeleccionado.nombre}
+                        <div className="space-y-6 text-sm">
+                            <div className="bg-[#0f2235] px-6 py-6">
+                                <p className="text-[#FFCC27] text-xs font-bold uppercase mb-2">Datos Generales</p>
+                                <p className="text-[#8ee2d5]/50 text-xs">Nombre</p>
+                                <p className="font-semibold mb-1">{parteSeleccionado.nombre}</p>
+                                <p className="text-[#8ee2d5]/50 text-xs">CAT</p>
+                                <p className="font-semibold mb-1">{parteSeleccionado.cat}</p>
+                                <p className="text-[#8ee2d5]/50 text-xs">BASE</p>
+                                <p className="font-semibold mb-1">{parteSeleccionado.baseDespliegue}</p>
+                                <p className="text-[#8ee2d5]/50 text-xs">Lugar</p>
+                                <p className="font-semibold mb-1">{parteSeleccionado.lugarDespliegue}</p>
+                                <p className="text-[#8ee2d5]/50 text-xs">Turno</p>
+                                <p className="font-semibold mb-1">{parteSeleccionado.turnoDespliegue}</p>
+                                <p className="text-[#8ee2d5]/50 text-xs">Supervisor</p>
+                                <p className="font-semibold mb-1">{parteSeleccionado.supervisor}</p>
+
                             </div>
-                            <div className="grid grid-cols-2 gap-4 text-sm">
-                                <Info label="CAT" value={parteSeleccionado.cat} />
-                                <Info label="Lugar" value={parteSeleccionado.lugarDespliegue} />
-                                <Info label="Turno" value={parteSeleccionado.turnoDespliegue} />
-                                <Info label="Supervisor" value={parteSeleccionado.supervisor} />
-                                <Info label="Total Presentes" value={parteSeleccionado.totalPresentes} />
-                            </div>
-                            <Seccion titulo="Servicios">
-                                {parteSeleccionado.servicios.map((s, i) => (
-                                    <Badge key={i} text={s.tipo} />
+                                <div className="px-6 py-6">
+                                    <p className="text-[#FFCC27] text-xs font-bold uppercase mb-2">Dotacion</p>
+                                    <div className="text-sm text-[#0f2235]/80 space-y-1 font-bold">
+                                        <p className="text-black/50 text-xs">Motorizados</p>
+                                        <p className="font-semibold">{parteSeleccionado.motorizados}</p>
+                                        <p className="text-black/50 text-xs">Infantes</p>
+                                        <p className="font-semibold">{parteSeleccionado.infantes}</p>
+                                        <p className="text-black/50 text-xs">Conduccion</p>
+                                        <p className="font-semibold">{parteSeleccionado.conduccion}</p>
+                                        <p className="text-black/50 text-xs">Ausentes</p>
+                                        <p className="font-semibold">{parteSeleccionado.ausentes}</p>
+                                    </div>
+                                </div>
+
+                            <div className="px-6 py-6 bg-[#FFFFFF]">
+                                <p className="text-[#0f2235] text-xs font-bold uppercase mb-2">Servicios</p>
+                                {parteSeleccionado.servicios.map((s,i) => (
+                                    <div key={i} className="border-border-white/10 rounded-xl p-3 space-y-2">
+                                        <p className="text-[#8ee2d5] font-semibold bg-[#0f2235]">{s.tipo}</p>
+                                        <p className="text-[#0f2235] text-xs">Nombre</p>
+                                        <p className="font-semibold text-[#0f2235]">{s.nombre}</p>
+                                        <p className="text-[#0f2235] text-xs">Direccion</p>
+                                        <p className="font-semibold text-[#0f2235]">{s.direccion}</p>
+                                                                                <p className="text-[#0f2235] text-xs">Agentes</p>
+                                                                                {Array.isArray(s.agentes) ? (
+                                                                                    <p className="font-semibold text-[#0f2235]">
+                                                                                        {s.agentes.map((a, idx) => (
+                                                                                            <span key={idx}>{a.nombre} ({a.rol}){idx < s.agentes.length - 1 ? ', ' : ''}</span>
+                                                                                        ))}
+                                                                                    </p>
+                                                                                ) : s.agentes ? (
+                                                                                    <p className="font-semibold text-[#0f2235]">{s.agentes}</p>
+                                                                                ) : null}
+                                        {s.puntos.map((p,j) => (
+                                            <div key={j} className="ml-4 border-l border-white/10 pl-3 mt-2e">
+                                                <p className="text-white/60 text-xs uppercase">{p.tipo}</p>
+                                                <p className="text-[#0f2235] text-xs">Nombre</p>
+                                                <p className="font-semibold text-[#0f2235]">{p.nombre}</p>
+                                                <p className="text-[#0f2235] text-xs">Direccion</p>
+                                                <p className="font-semibold text-[#0f2235]">{p.direccion}</p>
+                                                                                                <p className="text-[#0f2235] text-xs">Agentes</p>
+                                                                                                {Array.isArray(p.agentes) ? (
+                                                                                                    <p className="font-semibold text-[#0f2235]">
+                                                                                                        {p.agentes.map((a, idx) => (
+                                                                                                            <span key={idx}>{a.nombre} ({a.rol}){idx < p.agentes.length - 1 ? ', ' : ''}</span>
+                                                                                                        ))}
+                                                                                                    </p>
+                                                                                                ) : p.agentes ? (
+                                                                                                    <p className="font-semibold text-[#0f2235]">{p.agentes}</p>
+                                                                                                ) : null}
+                                            </div>
+                                        ))}
+
+                                    </div>
                                 ))}
-                                </Seccion>
+                            </div>
 
-                                <Seccion titulo="Ausentes">
-                                {parteSeleccionado.listaAusentes.length === 0
-                                    ? "Sin ausentes"
-                                    : parteSeleccionado.listaAusentes.map((a, i) => (
-                                        <p key={i}>• {a.nombre} — {a.motivo}</p>
-                                    ))}
-                                </Seccion>
+                            <div className="px-6 py-6 bg-[#8ee2d5]">
+                                <p className="text-[#0f2235] text-xs font-bold uppercase mb-2">Ausentes</p>
+                                {parteSeleccionado.listaAusentes.map((a,i) => (
+                                    <p key={i} className="text-[#0f2235]">•  {a.nombre} - {a.motivo} {a.motivoPersonalizado && `(${a.motivoPersonalizado})` }</p>
+                                ))}
 
-                                <Seccion titulo="Observaciones">
-                                {parteSeleccionado.observaciones || "Sin observaciones"}
-                                </Seccion>
+                            </div>
+                            <div className="px-6 py-6 bg-[#8ee2d5] text-[#0f2235]">
+                                <p className="text-[#0f2235] text-xs font-bold uppercase mb-2">Observaciones</p>
+                                {parteSeleccionado.observaciones || "Sin Observaciones"}
+                            </div>
                         </div>
                     )}
             </Dialog>
