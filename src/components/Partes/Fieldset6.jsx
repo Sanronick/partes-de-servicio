@@ -13,41 +13,44 @@ function Fieldset6() {
     mensaje: "",
     tipo: "exito",
   });
-
+  const [redireccionarAlCerrarModal, setRedireccionarAlCerrarModal] = useState(false);
 
   function cerrarModal() {
-    setModal({ ...modal, mostrar: false });
+    setModal((prevModal) => ({ ...prevModal, mostrar: false }));
+
+    if (redireccionarAlCerrarModal) {
+      vaciarFormulario();
+      navigate("/");
+    }
   }
 
-
-
   const enviarParte = async () => {
-    try{
+    try {
       const mensaje = FormatearMensaje(formData);
       console.log(mensaje);
       await navigator.clipboard.writeText(mensaje);
 
-        const { totalAgentes, totalPresentes, total, ...parteFinal} = formData
+      const { totalAgentes, totalPresentes, total, ...parteFinal } = formData;
 
-      await serviceReportes.guardarParte(parteFinal)
-      console.log(parteFinal)
+      await serviceReportes.guardarParte(parteFinal);
+      console.log(parteFinal);
 
       setModal({
         mostrar: true,
         mensaje: "Parte Guardado Correctamente ✅",
-        tipo: "exito"
-      })
-      vaciarFormulario()
-      navigate("/")
-    }catch(error) {
-      console.error(error)
+        tipo: "exito",
+      });
+      setRedireccionarAlCerrarModal(true);
+    } catch (error) {
+      console.error(error);
 
-      console.log(formData)
+      console.log(formData);
       setModal({
         mostrar: true,
-        mensaje: `Error: ${error.response.data.error} revisá los campos e intentalo nuevamente`,
-        tipo: "error"
-      })
+        mensaje: `Error: ${error.response?.data?.error || error.message} revisá los campos e intentalo nuevamente`,
+        tipo: "error",
+      });
+      setRedireccionarAlCerrarModal(false);
     }
   }
 

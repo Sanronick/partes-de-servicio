@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const url = 'http://localhost:8080/api/partes'
+//const url = 'http://localhost:8080/api/partes'
+const url = 'http://10.68.9.227:8080/api/partes'
 
 const getAll = () => axios.get(url).then( r => r.data)
 
